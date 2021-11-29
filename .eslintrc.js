@@ -1,29 +1,31 @@
 module.exports = {
-  root: true,
-  env: {
-    browser: true,
-    es2021: true,
-    node: true,
+  settings: {
+    'import/resolver': {
+      typescript: {},
+    },
+    'import/internal-regex': '^@aipmi-ouvre-boites/',
+  },
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
   },
   extends: [
-    "plugin:vue/vue3-recommended",
-    "eslint:recommended",
-    "@vue/typescript/recommended",
-    "@vue/prettier",
-    "@vue/prettier/@typescript-eslint",
+    'plugin:vue/base',
+    'plugin:vue/vue3-recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'prettier',
   ],
-  parserOptions: {
-    ecmaVersion: 2021,
-  },
+  plugins: ['unused-imports'],
   rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "@typescript-eslint/interface-name-prefix": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/no-unused-vars": ["off", { argsIgnorePattern: "^_" }],
-    "prettier/prettier": ["error", {}, { usePrettierrc: true }],
+    'unused-imports/no-unused-imports': 'error',
+    'import/order': ['error', { alphabetize: { order: 'asc' } }],
+    'import/no-named-as-default-member': 'off',
+    'import/no-unresolved': [
+      'error',
+      {
+        ignore: ['.svg', 'pwa-register', '@aipmi-ouvre-boites/uikit'],
+      },
+    ],
+    'vue/no-v-html': 'off',
   },
-};
+}
