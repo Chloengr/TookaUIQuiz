@@ -1,10 +1,16 @@
+<script setup lang="ts">
+  import Navbar from '@/components/Navbar.vue'
+</script>
+
 <template>
-  <div><router-link :to="{ path: '/' }">Home</router-link></div>
-  <router-view />
+  <div class="bg-purple-900 forHeight" >
+    <Navbar />
+    <router-view />
+  </div>
 </template>
 
-<script>
-  export default {
-    name: "App",
-  };
-</script>
+<style scoped>
+  .forHeight {
+    height: 100vh;
+  }
+</style>

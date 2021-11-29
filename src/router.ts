@@ -24,12 +24,12 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/register",
     name: Routes.Register,
-    component: () => import("@/views/Login.vue"),
+    component: () => import("@/views/Register.vue"),
   },
   {
     path: "/game",
     name: Routes.Game,
-    component: () => import("@/views/Register.vue"),
+    component: () => import("@/views/Game.vue"),
     //meta: { requiresAuth: true },
   },
   {
