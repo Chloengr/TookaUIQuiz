@@ -2,11 +2,23 @@
   import { useRouter } from 'vue-router'
   import { Routes } from '@/router'
   import { auth } from '@/stores/auth'
+  import { ref } from 'vue'
+  import ModalStarterGame from '@/components/ModalStarterGame.vue'
+
   const router = useRouter()
+  const isOpen = ref(false)
 
   //   if (!auth.isLoggedIn) {
   //     router.push({ name: Routes.Login });
   //   }
+
+  const closeModal = () => {
+    isOpen.value = false
+  }
+
+  const openModal = () => {
+    isOpen.value = true
+  }
 </script>
 
 <template>
@@ -30,6 +42,7 @@
       <button
         type="button"
         class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-4 m-6 rounded-full"
+        @click="openModal"
       >
         Lancer une partie
       </button>
@@ -41,10 +54,10 @@
       </button>
     </div>
   </div>
+  <ModalStarterGame :is-open="isOpen" @close="closeModal"/>
 </template>
 <style scoped>
   img {
     width: 200px;
   }
-
 </style>
