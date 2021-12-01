@@ -31,13 +31,14 @@
 
 
   const onSubmit = handleSubmit(async (values) => {
+    console.log(values)
+
     const params = {
       userID: userID,
       numberQuestion: values.numberQuestion,
       difficulty: values.difficulty.name,
-      categoryID: values.categoryID,
+      categoryID: values.categoryID.id,
     }
-    console.log(params)
     // await axios.post('http://localhost:3000/game', params).then((res) => {
     //   if (res?.data) {
     //     router.push({ name: Routes.Game })
