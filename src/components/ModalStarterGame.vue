@@ -31,11 +31,10 @@
 
 
   const onSubmit = handleSubmit(async (values) => {
-    console.log("values", values)
     const params = {
       userID: userID,
       numberQuestion: values.numberQuestion,
-      difficulty: values.difficulty,
+      difficulty: values.difficulty.name,
       categoryID: values.categoryID,
     }
     console.log(params)

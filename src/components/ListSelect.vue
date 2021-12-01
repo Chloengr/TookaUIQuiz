@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { InputHTMLAttributes, ref } from 'vue'
   import {
     Listbox,
     ListboxLabel,
@@ -12,16 +12,31 @@
 
   const selectedCategories = ref(categories[0].value)
 
+  type Props = {
+    modelValue: any
+  }
+
+  const props = defineProps<Props>()
+
+  type Emits = {
+    (e: 'update:modelValue', value?: string): void
+  }
+
+  const emit = defineEmits<Emits>()
+
+  const onInput = (event: Event) => {
+    emit('update:modelValue', (event.currentTarget as HTMLInputElement)?.value)
+  }
+
 </script>
 
 <template>
   <div class="w-full px-4 py-5 z-2">
-    <Listbox v-model="selectedCategories">
+    <Listbox :model-value="modelValue" @update:model-value="updateModelValue">
       <div class="relative mt-1 ">
         <label class="text-gray-900">Catégories :</label>
         <ListboxButton
-          class="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm"
-        >
+          class="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
           <span class="block text-gray-900 font-medium">{{ selectedCategories && selectedCategories.name }}</span>
           <span
             class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
@@ -42,7 +57,7 @@
               v-slot="{ active, selected }"
               v-for="category in categories"
               :key="category.id"
-              :value="category"
+              :value="category.id"
               as="template"
             >
               <li
