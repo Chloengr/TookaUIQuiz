@@ -35,7 +35,11 @@
 
     await axios.post(postURl, loginInput).then((res) => {
       if (res?.data) {
-        logIn({ username: res.data.username, token: res.data.access_token })
+        logIn({
+          username: res.data.username,
+          userID: res.data.id,
+          token: res.data.access_token,
+        })
         router.push({ name: Routes.Home })
       }
     })

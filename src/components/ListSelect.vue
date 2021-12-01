@@ -8,27 +8,21 @@
     ListboxOption,
   } from '@headlessui/vue'
   import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
+  import { categories } from '@/enums'
 
-  const categories = [
-    { label: 'Wade Cooper' },
-    { label: 'Arlene Mccoy' },
-    { label: 'Devon Webb' },
-    { label: 'Tom Cook' },
-    { label: 'Tanya Fox' },
-    { label: 'Hellen Schmidt' },
-  ]
-  const selectedCategories = ref(categories[0])
+  const selectedCategories = ref(categories[0].value)
+
 </script>
 
 <template>
-  <div class="w-full px-4 py-5">
+  <div class="w-full px-4 py-5 z-2">
     <Listbox v-model="selectedCategories">
       <div class="relative mt-1 ">
         <label class="text-gray-900">Catégories :</label>
         <ListboxButton
           class="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm"
         >
-          <span class="block text-gray-900 font-medium">{{ selectedCategories.label }}</span>
+          <span class="block text-gray-900 font-medium">{{ selectedCategories && selectedCategories.name }}</span>
           <span
             class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
           >
@@ -42,12 +36,12 @@
           leave-to-class="opacity-0"
         >
           <ListboxOptions
-            class="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+            class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
           >
             <ListboxOption
               v-slot="{ active, selected }"
               v-for="category in categories"
-              :key="category.label"
+              :key="category.id"
               :value="category"
               as="template"
             >
@@ -62,7 +56,7 @@
                     selected ? 'font-medium' : 'font-normal',
                     'block truncate',
                   ]"
-                  >{{ category.label }}</span
+                  >{{ category.name }}</span
                 >
                 <span
                   v-if="selected"
