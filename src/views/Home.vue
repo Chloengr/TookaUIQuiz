@@ -1,16 +1,12 @@
 <script setup lang="ts">
   import { useRouter } from 'vue-router'
   import { Routes } from '@/router'
-  import { auth } from '@/stores/auth'
+  import { auth, username } from '@/stores/auth'
   import { ref } from 'vue'
   import ModalStarterGame from '@/components/ModalStarterGame.vue'
 
   const router = useRouter()
   const isOpen = ref(false)
-
-  //   if (!auth.isLoggedIn) {
-  //     router.push({ name: Routes.Login });
-  //   }
 
   const closeModal = () => {
     isOpen.value = false
@@ -23,8 +19,8 @@
 
 <template>
   <div class="flex-1 min-w-0 max-w-[800px] mx-auto order-1 text-center">
-    <h1 class="font-poppins text-yellow-200 font-semibold font-size-60 m-9">
-      Bonjour Machin, Bienvenue sur Tooka Quiz.
+    <h1 class="text-white font-semibold font-size-60 m-9">
+      Bonjour {{ username }}, Bienvenue sur Tooka Quiz.
     </h1>
     <div class="flex justify-center">
       <img src="@/assets/logo1.gif" alt="logo" />
@@ -54,7 +50,7 @@
       </button>
     </div>
   </div>
-  <ModalStarterGame :is-open="isOpen" @close="closeModal"/>
+  <ModalStarterGame :is-open="isOpen" @close="closeModal" />
 </template>
 <style scoped>
   img {
