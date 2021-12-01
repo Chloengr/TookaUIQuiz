@@ -1,45 +1,12 @@
+<script setup lang="ts">
+  import AuthForm from '@/components/AuthForm.vue'
+</script>
+
 <template>
-  <v-container fluid>
-    <v-layout row wrap>
-      <v-flex xs12 class="text-xs-center" mt-5>
-        <h1>Inscription</h1>
-      </v-flex>
-      <v-flex xs12 sm6 offset-sm3 mt-3>
-        <form>
-          <v-layout column>
-            <v-flex>
-              <v-text-field
-                id="email"
-                name="email"
-                label="Email"
-                type="email"
-                required
-              ></v-text-field>
-            </v-flex>
-            <v-flex>
-              <v-text-field
-                id="password"
-                name="password"
-                label="Mot de passe"
-                type="password"
-                required
-              ></v-text-field>
-            </v-flex>
-            <v-flex>
-              <v-text-field
-                id="confirmPassword"
-                name="confirmPassword"
-                label="Confirmer mot de passe"
-                type="password"
-                required
-              ></v-text-field>
-            </v-flex>
-            <v-flex class="text-xs-center" mt-5>
-              <v-btn color="primary" type="submit">Valider</v-btn>
-            </v-flex>
-          </v-layout>
-        </form>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <div
+    class="min-h-full flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+  >
+    <h1 class="text-white font-semibold font-size-160 m-3">Inscription</h1>
+    <AuthForm isRegister />
+  </div>
 </template>

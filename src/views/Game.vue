@@ -4,9 +4,6 @@
   import { auth } from "@/stores/auth";
   const router = useRouter();
 
-  if (!auth.isLoggedIn) {
-    router.push({ name: Routes.Login });
-  }
 </script>
 
 <template>

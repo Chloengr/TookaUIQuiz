@@ -3,14 +3,8 @@
 </script>
 
 <template>
-  <div class="bg-purple-900 forHeight" >
+  <div class="bg-purple-900 h-screen" >
     <Navbar />
     <router-view />
   </div>
 </template>
-
-<style scoped>
-  .forHeight {
-    height: 100vh;
-  }
-</style>
