@@ -7,7 +7,29 @@
     DialogTitle,
   } from '@headlessui/vue'
   import { useField, useForm } from 'vee-validate'
+  import { useRouter } from 'vue-router'
   import { userID } from '@/stores/auth'
+  import { Routes } from '@/router'
+  import axios from 'axios'
+  import { Levels } from '@/enums/index.ts'
+
+  const levels = [
+    {
+      name: Levels.Easy,
+      id: 1,
+    },
+    {
+      name: Levels.Medium,
+      id: 2,
+    },
+    {
+      name: Levels.Hard,
+      id: 3,
+    },
+  ]
+
+  const router = useRouter()
+
   import RadioGroup from '@/components/RadioGroup.vue'
   import ListSelect from '@/components/ListSelect.vue'
   import Counter from '@/components/Counter.vue'
@@ -29,21 +51,19 @@
   const { value: difficulty } = useField<string>('difficulty')
   const { value: categoryID } = useField<string>('categoryID')
 
-
   const onSubmit = handleSubmit(async (values) => {
-    console.log(values)
-
     const params = {
-      userID: userID,
-      numberQuestion: values.numberQuestion,
+      userID: parseInt(userID),
+      numberQuestion: parseInt(values.numberQuestion),
       difficulty: values.difficulty.name,
       categoryID: values.categoryID.id,
     }
-    // await axios.post('http://localhost:3000/game', params).then((res) => {
-    //   if (res?.data) {
-    //     router.push({ name: Routes.Game })
-    //   }
-    // })
+    await axios.post('http://localhost:3000/game', params).then((res) => {
+      if (res?.data) {
+        const results = JSON.stringify(res?.data.results)
+        router.push({ name: Routes.Game, params: { results } })
+      }
+    })
   })
 </script>
 
@@ -84,7 +104,7 @@
               <form @submit="onSubmit">
                 <div class="mt-2">
                   <ListSelect v-model="categoryID" />
-                  <RadioGroup v-model="difficulty" />
+                  <RadioGroup :data="levels" v-model="difficulty" />
                   <Counter v-model="numberQuestion" />
                 </div>
                 <button

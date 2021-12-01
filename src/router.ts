@@ -27,7 +27,7 @@ const routes: RouteRecordRaw[] = [
     name: Routes.Register,
     component: () => import('@/views/Register.vue'),
   },
-  //A revoir parce que c'est pas la quon veut aller mais je peux pas enlever le component :/
+  //A revoir parce que c'est pas le bon path mais je peux pas enlever le component :/
   {
     path: '/logout',
     name: Routes.Logout,
