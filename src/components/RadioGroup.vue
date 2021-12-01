@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { HTMLInputElement, ref } from 'vue'
   import {
     RadioGroup,
     RadioGroupLabel,
@@ -23,14 +23,27 @@
     },
   ]
 
-  const selected = ref(levels[0])
+  const checked = ref(levels)
+
+  type Emits = {
+    (e: 'update:checked', value?: string): void
+  }
+
+  const emit = defineEmits<Emits>()
+
+  const onChange = (event: Event) => {
+    emit('update:checked', (event.currentTarget as HTMLInputElement)?.checked)
+  }
+
 </script>
 
 <template>
   <div class="w-full px-4 py-5">
     <div class="w-full max-w-md mx-auto">
-      <RadioGroup v-model="selected">
-        <RadioGroupLabel class="text-gray-900">Niveau de difficulté</RadioGroupLabel>
+      <RadioGroup v-bind="$attrs" v-model="checked">
+        <RadioGroupLabel class="text-gray-900"
+          >Niveau de difficulté</RadioGroupLabel
+        >
         <div class="space-y-2">
           <RadioGroupOption
             as="template"
@@ -38,6 +51,7 @@
             :key="level.name"
             :value="level"
             v-slot="{ active, checked }"
+            @input="onChange($event)"
           >
             <div
               :class="[
