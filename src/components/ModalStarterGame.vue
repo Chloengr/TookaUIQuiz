@@ -6,7 +6,8 @@
     DialogOverlay,
     DialogTitle,
   } from '@headlessui/vue'
-
+  import { useField, useForm } from 'vee-validate'
+  import { userID } from '@/stores/auth'
   import RadioGroup from '@/components/RadioGroup.vue'
   import ListSelect from '@/components/ListSelect.vue'
   import Counter from '@/components/Counter.vue'
@@ -22,6 +23,28 @@
   }
 
   const emits = defineEmits<Emits>()
+
+  const { handleSubmit, errors } = useForm()
+  const { value: numberQuestion } = useField<string>('numberQuestion')
+  const { value: difficulty } = useField<string>('difficulty')
+  const { value: categoryID } = useField<string>('categoryID')
+
+
+  const onSubmit = handleSubmit(async (values) => {
+    console.log("values", values)
+    const params = {
+      userID: userID,
+      numberQuestion: values.numberQuestion,
+      difficulty: values.difficulty,
+      categoryID: values.categoryID,
+    }
+    console.log(params)
+    // await axios.post('http://localhost:3000/game', params).then((res) => {
+    //   if (res?.data) {
+    //     router.push({ name: Routes.Game })
+    //   }
+    // })
+  })
 </script>
 
 <template>
@@ -58,22 +81,19 @@
               >
                 Choisissez vos paramètres
               </DialogTitle>
-              <div class="mt-2">
-                <RadioGroup />
-                <ListSelect />
-                <Counter />
-              </div>
-              <div class="mt-2">
-              </div>
-              <div class="mt-4">
+              <form @submit="onSubmit">
+                <div class="mt-2">
+                  <ListSelect v-model="categoryID" />
+                  <RadioGroup v-model="difficulty" />
+                  <Counter v-model="numberQuestion" />
+                </div>
                 <button
-                  type="button"
-                  class="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                  @click="emits('close')"
+                  type="submit"
+                  class="inline-flex justify-center px-4 py-2 mt-4 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                 >
                   C'est parti !
                 </button>
-              </div>
+              </form>
             </div>
           </TransitionChild>
         </div>
