@@ -6,24 +6,14 @@
     RadioGroupDescription,
     RadioGroupOption,
   } from '@headlessui/vue'
-  import { Levels } from '@/enums/index.ts'
 
-  const levels = [
-    {
-      name: Levels.Easy,
-      id: 1,
-    },
-    {
-      name: Levels.Medium,
-      id: 2,
-    },
-    {
-      name: Levels.Hard,
-      id: 3,
-    },
-  ]
+  type Props = {
+    data?: object
+  }
 
-  const checked = ref(levels)
+  const props = defineProps<Props>()
+
+  const checked = ref(props.data)
 
   type Emits = {
     (e: 'update:checked', value?: string): void
@@ -34,7 +24,6 @@
   const onChange = (event: Event) => {
     emit('update:checked', (event.currentTarget as HTMLInputElement)?.checked)
   }
-
 </script>
 
 <template>
@@ -47,9 +36,9 @@
         <div class="space-y-2">
           <RadioGroupOption
             as="template"
-            v-for="level in levels"
-            :key="level.name"
-            :value="level"
+            v-for="data in props.data"
+            :key="data.name"
+            :value="data"
             v-slot="{ active, checked }"
             @input="onChange($event)"
           >
@@ -72,7 +61,7 @@
                       :class="checked ? 'text-purple-600' : 'text-gray-900'"
                       class="font-medium capitalize"
                     >
-                      {{ level.name }}
+                      {{ data.name }}
                     </RadioGroupLabel>
                   </div>
                 </div>
